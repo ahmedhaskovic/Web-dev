@@ -1,0 +1,9 @@
+{
+    "name": "trackify/backend",
+    "description": "FlightPHP REST API for the Trackify fitness tracker",
+    "type": "project",
+    "require": {
+        "php": "^8.2",
+        "flightphp/core": "^3.0"
+    }
+}

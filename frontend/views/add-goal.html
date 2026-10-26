@@ -1,0 +1,33 @@
+<main class="content-container pt-3 pt-md-4 px-3 px-md-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <section class="dashboard-card">
+                <div class="dashboard-card-body">
+                    <h1 class="dashboard-card-title">Create a fitness goal</h1>
+                    <p class="dashboard-text-muted mb-4">Set a target you can track on your dashboard.</p>
+                    <form data-demo-form>
+                        <div class="mb-3">
+                            <label class="form-label-static" for="goal-type">Goal type</label>
+                            <select class="form-control" id="goal-type" required>
+                                <option value="">Choose a goal</option>
+                                <option>Target weight</option>
+                                <option>Workout consistency</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label-static" for="goal-target">Target value</label>
+                            <input class="form-control" type="number" id="goal-target" min="1" step="0.1" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label-static" for="goal-date">Target date</label>
+                            <input class="form-control" type="date" id="goal-date" required>
+                        </div>
+                        <button class="btn btn-custom-primary" type="submit">Save goal</button>
+                        <a class="btn btn-outline-light" href="#goals" data-page="goals.html">Cancel</a>
+                        <p class="form-status mt-3 mb-0" role="status" aria-live="polite"></p>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+</main>

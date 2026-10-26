@@ -1,0 +1,29 @@
+<main class="content-container pt-3 pt-md-4 px-3 px-md-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <section class="dashboard-card">
+                <div class="dashboard-card-body">
+                    <h1 class="dashboard-card-title">Edit profile</h1>
+                    <p class="dashboard-text-muted mb-4">Update your account details and current weight.</p>
+                    <form data-demo-form>
+                        <div class="mb-3">
+                            <label class="form-label-static" for="profile-name">Name</label>
+                            <input class="form-control" type="text" id="profile-name" value="John Doe" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label-static" for="profile-email">Email</label>
+                            <input class="form-control" type="email" id="profile-email" value="john.doe@example.com" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label-static" for="profile-weight">Current weight (kg)</label>
+                            <input class="form-control" type="number" id="profile-weight" value="75" min="1" step="0.1" required>
+                        </div>
+                        <button class="btn btn-custom-primary" type="submit">Save changes</button>
+                        <a class="btn btn-outline-light" href="#profile" data-page="profile.html">Cancel</a>
+                        <p class="form-status mt-3 mb-0" role="status" aria-live="polite"></p>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+</main>

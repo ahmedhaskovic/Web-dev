@@ -1,0 +1,102 @@
+<div>
+    <style>
+        .login-specific-style {
+            .gradient-custom-2 {
+            /* fallback for old browsers */
+            background: #AE060E;
+
+            /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(90deg, rgba(128,19,107,1) 0%, rgba(174,6,14,1) 50%, rgba(220,77,28,1) 100%);
+
+            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            /*background: linear-gradient(to right, #AE060E, #ac2b54);*/
+            background: linear-gradient(90deg, rgba(128,19,107,1) 0%, rgba(174,6,14,1) 50%, rgba(220,77,28,1) 100%);
+            }
+
+            @media (min-width: 1400px) {
+            .gradient-form {
+            height: 100vh !important;
+            }
+            }
+            /* @media (min-width: 769px) {
+            .gradient-custom-2 {
+            border-top-right-radius: .5rem;
+            border-bottom-right-radius: .5rem;
+            }
+            } */
+        }
+        .login-card {
+            background: var(--lighter-background);
+        }
+    </style>
+
+    <div class="login-specific-style">
+        <section class="h-100 gradient-form" style="background: var(--background-color);">
+            <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-xl-10">
+                <div class="login-card rounded-3 text-white">
+                    <div class="row g-0 px-4 pt-5 pb-4 py-md-3">
+                    <div class="col-lg-6">
+                        <div class="card-body pt-md-4 mx-md-4">
+
+                        <div class="text-center">
+                            <img src="assets/logo.png"
+                            style="width: 70px;" alt="logo">
+                            <h4 class="mt-1 mb-5 pb-1 racing-sans-one-regular">Welcome to Trackify</h4>
+                        </div>
+
+                        <form>
+                            <p class="racing-sans-one-regular">Please create your account</p>
+
+                            <div data-mdb-input-init class="form-outline mb-4">
+                            <input type="email" id="register-email" class="form-control" autocomplete="email" required />
+                            <label class="form-label" for="register-email">Email</label>
+                            </div>
+
+                            <div data-mdb-input-init class="form-outline mb-4">
+                            <input type="text" id="register-username" class="form-control" autocomplete="username" required />
+                            <label class="form-label" for="register-username">Username</label>
+                            </div>
+
+                            <div data-mdb-input-init class="form-outline mb-4">
+                            <input type="password" id="register-password" class="form-control" autocomplete="new-password" required />
+                            <label class="form-label" for="register-password">Password</label>
+                            </div>
+
+                            <div class="text-center pt-1 mb-3 pb-1">
+                            <button data-mdb-button-init data-mdb-ripple-init class="btn btn-block btn-custom-white-text fa-lg gradient-custom-2 mb-3" type="button" data-page="dashboard.html">Create account</button>
+
+                            <!-- <a class="text-muted" href="#!">Forgot password?</a> -->
+                            </div>
+
+                            <div class="d-flex align-items-center justify-content-center pb-4">
+                            <p class="mb-0 me-2">Already have an account?</p>
+                            <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-danger" data-page="login.html">Login</button>
+                            </div>
+
+
+                            <!-- <div class="input-container">
+                                <input type="text" id="animated-input" placeholder="" required autocomplete="off">
+                                <label for="animated-input">Placeholder</label>
+                                <div class="input-bg"></div>
+                            </div> -->
+
+                        </form>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
+                        <div class="text-white px-3 py-4 p-md-5 mx-md-4">
+                        <h4 class="mb-4">Start tracking your progress</h4>
+                        <p class="small mb-0">Create a space for your workouts and goals. This milestone is a static preview; registration will be connected to the backend in a later milestone.</p>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+        </section>
+    </div>
+</div>
