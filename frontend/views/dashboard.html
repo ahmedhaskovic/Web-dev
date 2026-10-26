@@ -1,0 +1,345 @@
+<style>
+    /* cards and progress bars */
+    .dashboard-card {
+        background-color: #323334;
+        padding: 0.5rem;
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+    }
+    .dashboard-card:hover {
+        transform: translateY(-5px);
+    }
+    .dashboard-card-body {
+        padding: 0.5rem;
+    }
+    .dashboard-card-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+    }
+    .dashboard-card-text {
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--primary-color);
+        margin-bottom: 0rem;
+    }
+    .dashboard-card-text-log {
+        font-size: 2vw;
+        font-weight: bold;
+        color: var(--primary-color);
+        margin-bottom: 0rem;
+    }
+    .dashboard-text-muted {
+        font-size: 0.9rem;
+        margin-bottom: 0;
+    }
+
+    .dashboard-progress {
+        background: #3a3a3a; /* Default background for the unfilled part */
+        border-radius: 10px; /* Match the progress bar's border radius */
+        overflow: hidden; /* Ensure the gradient doesn't overflow */
+    }
+    .dashboard-progress-bar {
+        background: linear-gradient(90deg, rgba(128,19,107,1) 0%, rgba(174,6,14,1) 50%, rgba(220,77,28,1) 100%);
+        background-size: 100% 100%; /* Ensure the gradient spans the full width */
+        transition: width 0.5s ease; /* Smooth transition for the progress bar */
+    }
+
+    @media (max-width: 767px) {
+        .dashboard-card-text-log {
+            font-size: 4vw;
+        }
+    }
+
+    @media (max-width: 576px) { /* Styles for phones */
+        .dashboard-card {
+            padding: 0.5rem; /* Reduce padding on small screens */
+            margin: none;
+        }
+        .dashboard-card-title {
+            font-size: 1rem; /* Smaller title on small screens */
+        }
+        .dashboard-card-text {
+            font-size: 1rem; /* Smaller text on small screens */
+        }
+
+        .dashboard-text-muted {
+            font-size: 0.8rem; /* Smaller muted text on small screens */
+        }
+    }
+
+    /* Icon Container */
+    .icon-container {
+        position: relative;
+        width: 100%;
+        /* max-width: 80px;  */
+        margin: 0 auto;
+    }
+
+    /* Fill Level */
+    .fill-level {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: var(--primary-color);
+        transition: height 0.3s ease;
+        clip-path: inset(0 0 0 0); /* Initially, no cropping */
+    }
+
+   /* Image Styling */
+    .icon-container img {
+        width: 60%;
+        /* height: auto; */
+
+    }
+
+    .black-to-white {
+        filter: invert(100%) sepia(54%) saturate(944%) hue-rotate(51deg) brightness(114%) contrast(119%);
+    }
+
+    /* Button Styling */
+    .btn-custom-primary {
+        width: 100%; /* Full width */
+        max-width: 100%; /* Ensure it spans the entire card */
+        margin-top: 10px; /* Add spacing between icon and button */
+    }
+
+    /* Responsive Adjustments */
+    @media (min-width: 768px) {
+        .btn-custom-primary {
+            width: auto; /* Auto width on larger screens */
+            margin-top: 0; /* Remove spacing on larger screens */
+        }
+    }
+
+    /* Modal Styling */
+    .modal-content {
+        background-color: var(--background-color); /* Match your app's background color */
+        color: var(--text-color); /* Match your app's text color */
+        border: 1px solid var(--primary-color); /* Add a border */
+        border-radius: 10px; /* Rounded corners */
+    }
+
+    .modal-header {
+        border-bottom: 1px solid var(--primary-color); /* Add a border below the header */
+    }
+
+    .modal-title {
+        color: var(--text-color); /* Match your app's text color */
+    }
+
+    .modal-body {
+        padding: 20px; /* Add padding */
+    }
+
+    .modal-footer {
+        border-top: 1px solid var(--primary-color); /* Add a border above the footer */
+    }
+
+    /* Input Field Styling */
+    .modal-body .form-control {
+        background-color: var(--lighter-background); /* Match your app's input background */
+        color: var(--text-color); /* Match your app's text color */
+        border: 1px solid var(--primary-color); /* Add a border */
+        border-radius: 5px; /* Rounded corners */
+        padding: 10px; /* Add padding */
+    }
+
+    .modal-body .form-control:focus {
+        border-color: var(--primary-color); /* Highlight border on focus */
+        box-shadow: 0 0 0 0.2rem rgba(174, 6, 14, 0.25); /* Add a glow effect */
+    }
+
+    /* Button Styling */
+    .modal-footer .btn-secondary {
+        background-color: #636363; /* Match your app's secondary color */
+        color: var(--text-color); /* Match your app's text color */
+        border: none; /* Remove border */
+    }
+
+    .modal-footer .btn-custom-primary {
+        background-color: var(--secondary-color); /* ovo je ona crvena boja */
+        color: var(--text-color); /* Match your app's text color */
+        border: none; /* Remove border */
+    }
+
+</style>
+<div>
+
+    <div class="content-container pt-3 pt-md-4 px-3 px-md-5">
+
+
+        <!-- Row 1: Overview Statistics -->
+        <div class="row mb-3 pt-1 px-2">
+            <div class="col-4 col-md-4 px-1">
+                <div class="dashboard-card h-100">
+                    <div class="dashboard-card-body">
+                        <h5 class="dashboard-card-title">Total Workouts</h5>
+                        <p class="dashboard-card-text">15</p>
+                        <p class="dashboard-text-muted">This month</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4 col-md-4 px-1">
+                <div class="dashboard-card h-100">
+                    <div class="dashboard-card-body">
+                        <h5 class="dashboard-card-title">Calories Burned</h5>
+                        <p class="dashboard-card-text">2,500 kcal</p>
+                        <p class="dashboard-text-muted">This week</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4 col-md-4 px-1">
+                <div class="dashboard-card h-100">
+                    <div class="dashboard-card-body">
+                        <h5 class="dashboard-card-title">Active Days</h5>
+                        <p class="dashboard-card-text">12</p>
+                        <p class="dashboard-text-muted">This month</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 2: Progress Charts -->
+        <div class="row mb-3 px-2">
+            <div class="col-md-6 px-1">
+                <!-- bar chart card -->
+                <div class="dashboard-card">
+                    <div class="dashboard-card-body">
+                        <h5 class="dashboard-card-title">Weekly Progress</h5>
+                        <canvas id="weeklyProgressChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 px-2">
+                <div class="row px-1">
+                    <div class="col-12 px-1">
+                        <!-- progress bar card -->
+                        <div class="dashboard-card mb-3">
+                            <div class="dashboard-card-body">
+                                <h5 class="dashboard-card-title">Goal Completion</h5>
+                                <div class="dashboard-progress">
+                                    <div class="dashboard-progress-bar" role="progressbar" style="width: 75%; color: transparent;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">75%</div>
+                                </div>
+                                <p class="dashboard-text-muted mt-2">You're 75% closer to your monthly goal!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row px-1">
+                    <!-- Daily Hydration card -->
+                    <div class="col-6 px-1">
+                        <div class="dashboard-card">
+                            <div class="dashboard-card-body">
+                                <h5 class="dashboard-card-title">Daily Hydration</h5>
+                                <p class="dashboard-card-text-log" id="water-amount">0000 / 2000ml</p>
+                                <!-- Icon -->
+                                <div class="icon-container text-center mb-3">
+                                    <img src="assets/drink-fill.png" class="img-fluid" alt="" style="position: absolute; top: 0; left: 20%;">
+                                    <img src="assets/drink.png" class="img-fluid black-to-white" alt="Water glass">
+                                    <div class="fill-level" id="water-fill"></div> <!-- dynamic fill level -->
+                                </div>
+                                <!-- Button -->
+                                <button class="btn btn-custom-primary w-100" data-bs-toggle="modal" data-bs-target="#waterModal">Log Water</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Daily Calories card -->
+                    <div class="col-6 px-1">
+                        <div class="dashboard-card">
+                            <div class="dashboard-card-body">
+                                <h5 class="dashboard-card-title">Daily Calories</h5>
+                                <p class="dashboard-card-text-log" id="calorie-amount">0000 / 2000kcal</p>
+                                <!-- Icon -->
+                                <div class="icon-container text-center mb-3">
+                                    <img src="assets/chicken-thigh-fill.png" class="img-fluid" alt="" style="position: absolute; top: 0; left: 20%;">
+                                    <img src="assets/chicken-thigh-outline.png" class="img-fluid black-to-white" alt="Calories">
+
+                                    <div class="fill-level" id="calorie-fill"></div> <!-- dynamic fill level -->
+                                </div>
+                                <!-- Button -->
+                                <button class="btn btn-custom-primary w-100" data-bs-toggle="modal" data-bs-target="#calorieModal">Log Calories</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 3: Quick Actions -->
+        <div class="row mb-4 px-2">
+            <div class="col-md-6 mb-3 px-1">
+                <div class="dashboard-card">
+                    <div class="dashboard-card-body text-center">
+                        <h5 class="dashboard-card-title">Log a Workout</h5>
+                        <p class="dashboard-card-text mb-2">Quickly log your workout for today.</p>
+                        <a href="#workouts" data-page="workout-log.html" class="btn btn-custom-primary">Log Workout</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 px-1">
+                <div class="dashboard-card">
+                    <div class="dashboard-card-body text-center">
+                        <h5 class="dashboard-card-title">Set a Goal</h5>
+                        <p class="dashboard-card-text mb-2">Set a new fitness goal for yourself.</p>
+                        <a href="#goals" data-page="goals.html" class="btn btn-custom-primary">Set Goal</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="row mb-4 px-2">
+        <div class="col-12 px-1">
+            <section class="dashboard-card external-api-note" aria-labelledby="weather-heading">
+                <div class="dashboard-card-body">
+                    <h5 class="dashboard-card-title" id="weather-heading">Outdoor workout conditions</h5>
+                    <p class="mb-0">Planned feature: current weather will help you decide whether to take your workout outdoors. Weather data from Open-Meteo will be added in a later milestone.</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Water Log Modal -->
+    <div class="modal fade" id="waterModal" tabindex="-1" aria-labelledby="waterModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="waterModalLabel">Log Water Intake</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="number" id="waterInput" class="form-control" placeholder="Enter amount in milliliters (ml)" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-custom-primary" data-log-water>Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Calorie Log Modal -->
+    <div class="modal fade" id="calorieModal" tabindex="-1" aria-labelledby="calorieModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="calorieModalLabel">Log Calorie Intake</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="number" id="calorieInput" class="form-control" placeholder="Enter amount in calories (kcal)" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-custom-primary" data-log-calories>Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

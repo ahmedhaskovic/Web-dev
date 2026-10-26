@@ -1,0 +1,80 @@
+<div id="workout-log-page" class="content-container pt-3 pt-md-4 px-3 px-md-5">
+    <!-- Workout Log Header -->
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h2>Workout Log</h2>
+            <p class="dashboard-text-muted">Track your daily workouts.</p>
+        </div>
+    </div>
+
+    <!-- Workout Log Form -->
+    <div class="row mb-3">
+        <div class="col-12">
+            <div class="dashboard-card">
+                <div class="dashboard-card-body">
+                    <h5 class="dashboard-card-title">Log a Workout</h5>
+                    <form id="workout-log-form" data-demo-form>
+                        <div class="mb-3">
+                            <label for="workout-date">Workout date</label>
+                            <input type="date" class="form-control" id="workout-date" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="workout-type">Workout notes</label>
+                            <input type="text" class="form-control" id="workout-type" placeholder="e.g., Running, Weightlifting" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exercise-name">Exercise</label>
+                            <select class="form-control" id="exercise-name" required>
+                                <option value="">Choose an exercise</option>
+                                <option>Running</option>
+                                <option>Squat</option>
+                                <option>Push-up</option>
+                                <option>Yoga</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="workout-duration" class="">Duration (minutes)</label>
+                            <input type="number" class="form-control" id="workout-duration" placeholder="e.g., 30" min="1" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label for="exercise-sets">Sets</label>
+                                <input type="number" class="form-control" id="exercise-sets" min="1">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="exercise-reps">Repetitions</label>
+                                <input type="number" class="form-control" id="exercise-reps" min="1">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="exercise-weight">Weight (kg)</label>
+                                <input type="number" class="form-control" id="exercise-weight" min="0" step="0.5">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="workout-calories" class="">Calories Burned</label>
+                            <input type="number" class="form-control" id="workout-calories" placeholder="e.g., 300" min="0" required>
+                        </div>
+                        <button type="submit" class="btn btn-custom-primary">Log Workout</button>
+                        <p class="form-status mt-3 mb-0" role="status" aria-live="polite"></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Workout History -->
+    <div class="row">
+        <div class="col-12">
+            <div class="dashboard-card">
+                <div class="dashboard-card-body">
+                    <h5 class="dashboard-card-title">Workout History</h5>
+                    <ul class="list-group">
+                        <li class="list-group-item">Running - 30 mins (300 kcal)</li>
+                        <li class="list-group-item">Weightlifting - 45 mins (200 kcal)</li>
+                        <li class="list-group-item">Yoga - 60 mins (150 kcal)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

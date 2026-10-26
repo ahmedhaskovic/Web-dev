@@ -1,0 +1,15 @@
+# Local configuration and secrets
+/backend/config/config.php
+/.env
+/.env.*
+!/.env.example
+
+# Runtime files and installed dependencies
+/backend/logs/*
+!/backend/logs/.gitkeep
+/backend/vendor/
+
+# Local editor and operating-system files
+.DS_Store
+Thumbs.db
+.vscode/
