@@ -5,8 +5,7 @@
 !/.env.example
 
 # Runtime files and installed dependencies
-/backend/logs/*
-!/backend/logs/.gitkeep
+/backend/logs/
 /backend/vendor/
 
 # Local editor and operating-system files
