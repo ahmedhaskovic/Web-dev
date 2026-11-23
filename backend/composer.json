@@ -4,6 +4,7 @@
     "type": "project",
     "require": {
         "php": "^8.2",
-        "flightphp/core": "^3.0"
+        "flightphp/core": "^3.0",
+        "zircote/swagger-php": "^5.0"
     }
 }

@@ -14,6 +14,12 @@ class ExerciseDao extends BaseDao
         return ['name', 'description', 'muscle_group'];
     }
 
+    // The column collation is case-insensitive, so "push-up" also finds "Push-up".
+    public function get_by_name(string $name): ?array
+    {
+        return $this->find_where(['name' => $name])[0] ?? null;
+    }
+
     public function get_workout_counts_by_muscle_group(): array
     {
         return $this->query(
