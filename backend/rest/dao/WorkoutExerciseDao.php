@@ -14,6 +14,16 @@ class WorkoutExerciseDao extends BaseDao
         return ['workout_id', 'exercise_id', 'duration', 'sets', 'reps', 'weight'];
     }
 
+    public function count_by_exercise(int $exerciseId): int
+    {
+        return $this->count_where(['exercise_id' => $exerciseId]);
+    }
+
+    public function get_by_workout_and_exercise(int $workoutId, int $exerciseId): ?array
+    {
+        return $this->find_where(['workout_id' => $workoutId, 'exercise_id' => $exerciseId])[0] ?? null;
+    }
+
     public function get_by_workout_id_with_exercises(int $workoutId): array
     {
         return $this->query(

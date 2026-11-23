@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS users (
     password VARCHAR(255) NOT NULL,
     role VARCHAR(20) NOT NULL DEFAULT 'member',
     current_weight DECIMAL(6,2) NOT NULL,
+    city VARCHAR(100) NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT chk_users_role CHECK (role IN ('admin', 'member')),
@@ -79,16 +80,17 @@ CREATE TABLE IF NOT EXISTS goals (
     INDEX idx_goals_user_target_date (user_id, target_date)
 ) ENGINE=InnoDB;
 
-INSERT INTO users (id, name, email, password, role, current_weight) VALUES
-    (1, 'Amina Hadzic', 'admin@trackify.local', '$2y$10$Dpu0ZcokZ/9qqvQRBw658OtG1eGdWReEJS.J2ohWBlJUyGMUwLuJS', 'admin', 68.50),
-    (2, 'Marko Petrovic', 'marko@trackify.local', '$2y$10$Dpu0ZcokZ/9qqvQRBw658OtG1eGdWReEJS.J2ohWBlJUyGMUwLuJS', 'member', 82.00),
-    (3, 'Lejla Kovac', 'lejla@trackify.local', '$2y$10$Dpu0ZcokZ/9qqvQRBw658OtG1eGdWReEJS.J2ohWBlJUyGMUwLuJS', 'member', 61.25)
+INSERT INTO users (id, name, email, password, role, current_weight, city) VALUES
+    (1, 'Amina Hadzic', 'admin@trackify.local', '$2y$10$Dpu0ZcokZ/9qqvQRBw658OtG1eGdWReEJS.J2ohWBlJUyGMUwLuJS', 'admin', 68.50, 'Sarajevo'),
+    (2, 'Marko Petrovic', 'marko@trackify.local', '$2y$10$Dpu0ZcokZ/9qqvQRBw658OtG1eGdWReEJS.J2ohWBlJUyGMUwLuJS', 'member', 82.00, 'Mostar'),
+    (3, 'Lejla Kovac', 'lejla@trackify.local', '$2y$10$Dpu0ZcokZ/9qqvQRBw658OtG1eGdWReEJS.J2ohWBlJUyGMUwLuJS', 'member', 61.25, 'Bihać')
 ON DUPLICATE KEY UPDATE
     name = VALUES(name),
     email = VALUES(email),
     password = VALUES(password),
     role = VALUES(role),
-    current_weight = VALUES(current_weight);
+    current_weight = VALUES(current_weight),
+    city = VALUES(city);
 
 INSERT INTO exercises (id, name, description, muscle_group) VALUES
     (1, 'Barbell Squat', 'Compound lower-body lift performed with a barbell.', 'Legs'),
@@ -128,13 +130,16 @@ ON DUPLICATE KEY UPDATE
     reps = VALUES(reps),
     weight = VALUES(weight);
 
-INSERT INTO goals (id, user_id, target_weight, start_weight, target_date, workouts_completed) VALUES
-    (1, 2, 78.00, 82.00, '2027-01-31', 3),
-    (2, 2, 80.00, 82.00, '2026-12-31', 8),
-    (3, 3, 58.00, 61.25, '2027-02-15', 2)
+-- workouts_completed = the user's workouts dated from the goal's creation date to its target date.
+-- GoalService recalculates it whenever a goal or one of the user's workouts changes.
+INSERT INTO goals (id, user_id, target_weight, start_weight, target_date, workouts_completed, created_at) VALUES
+    (1, 2, 78.00, 82.00, '2027-01-31', 3, '2026-10-18 08:00:00'),
+    (2, 2, 80.00, 82.00, '2026-12-31', 3, '2026-10-18 08:00:00'),
+    (3, 3, 58.00, 61.25, '2027-02-15', 2, '2026-10-18 08:00:00')
 ON DUPLICATE KEY UPDATE
     user_id = VALUES(user_id),
     target_weight = VALUES(target_weight),
     start_weight = VALUES(start_weight),
     target_date = VALUES(target_date),
-    workouts_completed = VALUES(workouts_completed);
+    workouts_completed = VALUES(workouts_completed),
+    created_at = VALUES(created_at);

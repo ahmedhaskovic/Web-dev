@@ -1,0 +1,19 @@
+# Apache configuration for the Trackify API (needs mod_rewrite and AllowOverride All).
+
+# Never show folder listings.
+Options -Indexes
+
+RewriteEngine On
+
+# 403 for private folders and files: configuration, logs, Composer packages, PHP source and test scripts.
+# [NC] = ignore upper/lower case, because Windows (XAMPP) file names are not case-sensitive.
+RewriteRule ^(config|logs|vendor|utils|rest|middleware)(/|$) - [F,NC,L]
+RewriteRule ^(test\.php|composer\.(json|lock))$ - [F,NC,L]
+# Only index.html and swagger.php in the docs folder are public; the attribute files are not.
+RewriteRule ^public/v1/docs/(doc_setup\.php|paths)(/|$) - [F,NC,L]
+
+# public/v1/docs (Swagger UI) is a real folder, so it is served directly.
+# Every other request that is not a real file or folder goes to Flight.
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]

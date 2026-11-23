@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . '/../../config/config.php';
-
 abstract class BaseDao
 {
     private static ?PDO $connection = null;
@@ -104,6 +102,56 @@ abstract class BaseDao
         return array_intersect_key($data, array_flip($allowedColumns));
     }
 
+    // Returns the rows whose columns equal the given values, for example ['user_id' => 2].
+    // Column names cannot be bound as parameters, so they are checked against an allow-list;
+    // the values are always bound as parameters.
+    protected function find_where(array $conditions, ?string $orderBy = null, bool $descending = false): array
+    {
+        [$whereSql, $parameters] = $this->build_where($conditions);
+
+        $sql = 'SELECT * FROM `' . $this->tableName() . '`' . $whereSql;
+        if ($orderBy !== null) {
+            $this->check_column($orderBy);
+            $sql .= ' ORDER BY `' . $orderBy . '`' . ($descending ? ' DESC' : ' ASC') . ', `id`';
+        }
+
+        return $this->query($sql, $parameters)->fetchAll();
+    }
+
+    // Counts the rows whose columns equal the given values.
+    protected function count_where(array $conditions): int
+    {
+        [$whereSql, $parameters] = $this->build_where($conditions);
+
+        return (int) $this->query(
+            'SELECT COUNT(*) FROM `' . $this->tableName() . '`' . $whereSql,
+            $parameters
+        )->fetchColumn();
+    }
+
+    private function build_where(array $conditions): array
+    {
+        $clauses = [];
+        $parameters = [];
+        foreach ($conditions as $column => $value) {
+            $this->check_column($column);
+            $clauses[] = '`' . $column . '` = :where_' . $column;
+            $parameters[':where_' . $column] = $value;
+        }
+
+        $whereSql = $clauses === [] ? '' : ' WHERE ' . implode(' AND ', $clauses);
+
+        return [$whereSql, $parameters];
+    }
+
+    private function check_column(string $column): void
+    {
+        $allowedColumns = array_merge(['id'], $this->writableColumns());
+        if (!in_array($column, $allowedColumns, true)) {
+            throw new InvalidArgumentException('Unknown column: ' . $column);
+        }
+    }
+
     public function begin_transaction(): void
     {
         if (!self::getConnection()->beginTransaction()) {
@@ -125,15 +173,28 @@ abstract class BaseDao
         }
     }
 
+    // Loads backend/config/config.php without opening a database connection,
+    // so code that only needs settings (for example the weather service) can use Config.
+    public static function loadConfig(): void
+    {
+        if (class_exists('Config', false)) {
+            return;
+        }
+
+        $configPath = __DIR__ . '/../../config/config.php';
+        if (!is_file($configPath)) {
+            throw new RuntimeException(
+                'Configuration not found. Copy backend/config/config.example.php to backend/config/config.php.'
+            );
+        }
+
+        require_once $configPath;
+    }
+
     private static function getConnection(): PDO
     {
         if (self::$connection === null) {
-            $configPath = __DIR__ . '/../../config/config.php';
-            if (!is_file($configPath)) {
-                throw new RuntimeException(
-                    'Database configuration not found. Copy backend/config/config.example.php to backend/config/config.php.'
-                );
-            }
+            self::loadConfig();
 
             self::$connection = new PDO(
                 'mysql:host=' . Config::DB_HOST()
